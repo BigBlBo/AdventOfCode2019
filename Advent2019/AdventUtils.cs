@@ -25,5 +25,23 @@ namespace Advent2019
             
             Console.ReadLine();
         }
+
+        public static long GCD(long first, long second)
+        {
+            // Euclidean algorithm
+            long x;
+            while (second != 0)
+            {
+                x = second;
+                second = first % second;
+                first = x;
+            }
+            return first;
+        }
+
+        public static long LCM(long first, long second)
+        {
+            return (first * second / GCD(first, second));
+        }
     }
 }
