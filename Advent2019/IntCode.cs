@@ -26,7 +26,7 @@ namespace Advent2019
             }
         }
 
-        public long RunProgram1()
+        public long RunProgram()
         {
             for (long index = pointer; index < inputInt.Length;)
             {
@@ -34,8 +34,8 @@ namespace Advent2019
                 int[] instruction = GetInstructions(inputInt[index]);
 
                 int opCode = instruction[4];
-                long firstPos = inputInt[index + 1];
-                long secondPos = inputInt[index + 2];
+                long firstPos =  index + 1 < inputInt.Length ? inputInt[index + 1] : 0;
+                long secondPos = index + 2 < inputInt.Length ? inputInt[index + 2] : 0;
 
                 if (opCode == 1)
                 {
@@ -147,6 +147,16 @@ namespace Advent2019
             readEndPointer = -1; readPointer = -1;
         }
 
+        public long GetValueAtPosition(int position)
+        {
+            return this.inputInt[position];
+        }
+
+        public void SetValueAtPosition(int position, long value)
+        {
+            this.inputInt[position] = value;
+        }
+
         public void AddToReadBuffer(long readAdd)
         {
             if(readBuffer.Length < readEndPointer)
@@ -156,6 +166,12 @@ namespace Advent2019
 
             readEndPointer++; 
             readBuffer[readEndPointer] = readAdd;
+        }
+
+        public void SetNewReadBuffer(long[] readBuffer)
+        {
+            this.readBuffer = readBuffer;
+            readEndPointer = readBuffer.Length - 1; readPointer = -1;
         }
 
         private long GetOperand(long mode, long[] inputInt, long position, long relativePosition)

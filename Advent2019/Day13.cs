@@ -11,11 +11,59 @@ namespace Advent2019
             long[] inputInt = ReadAndParse();
 
             int result = 0;
-            
+            IntCode intCode = new IntCode(inputInt, new long[0]);
+            IDictionary<long, IDictionary<long, int>> grid = new Dictionary<long, IDictionary<long, int>>();
 
+            while (true)
+            {
+                long x = 0; long y = 0; int tile = 0; bool done = false;
 
-            //3397667
-            Console.WriteLine("Day 13 task 1 : " + result);
+                for(int index = 0;index < 3; index++)
+                {
+                    long output = intCode.RunProgram();
+                    if (output == 99)
+                    {
+                        done = true;
+                        break;
+                    }
+
+                    if (index == 0) { x = output; }
+                    if (index == 1) { y = output; }
+                    if (index == 2) { tile = (int)output; }
+
+                }
+
+                if (done)
+                {
+                    break;
+                }
+
+                if (!grid.ContainsKey(x)) { grid[x] = new Dictionary<long, int>(); }
+                grid[x][y] = tile;
+            }
+            /*
+            for (int index = 0; index < 20; index++)
+            {
+                foreach (int key in grid.Keys)
+                {
+                    if(grid[key][index] != 0)
+                        Console.Write(grid[key][index]);
+                    else
+                        Console.Write(" ");
+                }
+                Console.WriteLine();
+            }*/
+
+            foreach (int key in grid.Keys)
+            {
+                foreach (int key2 in grid[key].Keys)
+                {
+                    if (grid[key][key2] == 2) { result++; }
+                }
+            }
+
+           //193
+           Console.WriteLine("Day 13 task 1 : " + result);
         }
 
         public void Task2()
@@ -23,9 +71,58 @@ namespace Advent2019
             long[] inputInt = ReadAndParse();
 
             int result = 0;
-            
+            IntCode intCode = new IntCode(inputInt, new long[0]);
+            IDictionary<long, IDictionary<long, int>> grid = new Dictionary<long, IDictionary<long, int>>();
 
-            //5093620
+            while (true)
+            {
+                long x = 0; long y = 0; int tile = 0; bool done = false;
+
+                for (int index = 0; index < 3; index++)
+                {
+                    long output = intCode.RunProgram();
+                    if (output == 99)
+                    {
+                        done = true;
+                        break;
+                    }
+
+                    if (index == 0) { x = output; }
+                    if (index == 1) { y = output; }
+                    if (index == 2) { tile = (int)output; }
+
+                }
+
+                if (done)
+                {
+                    break;
+                }
+
+                if (!grid.ContainsKey(x)) { grid[x] = new Dictionary<long, int>(); }
+                grid[x][y] = tile;
+            }
+            /*
+            for (int index = 0; index < 20; index++)
+            {
+                foreach (int key in grid.Keys)
+                {
+                    if(grid[key][index] != 0)
+                        Console.Write(grid[key][index]);
+                    else
+                        Console.Write(" ");
+                }
+                Console.WriteLine();
+            }*/
+
+            foreach (int key in grid.Keys)
+            {
+                foreach (int key2 in grid[key].Keys)
+                {
+                    if (grid[key][key2] == 2) { result++; }
+                }
+            }
+
+            //193
             Console.WriteLine("Day 13 task 2 : " + result);
         }
 
