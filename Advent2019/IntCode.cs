@@ -118,11 +118,11 @@ namespace Advent2019
                 }
                 else if (opCode == 9)
                 {
+                    if (instruction[3] == 9) break;
+
                     long operand1 = GetOperand(instruction[2], inputInt, firstPos, relativePosition);
                     relativePosition += operand1;
                     index += 2;
-
-                    if (instruction[3] == 9) break;
                 }
                 else
                 {
