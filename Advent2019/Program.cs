@@ -17,8 +17,9 @@ namespace Advent2019
             Day8 day8 = new Day8(); day8.Task1(); day8.Task2();
             Day9 day9 = new Day9(); day9.Task1(); day9.Task2();
             Day11 day11 = new Day11(); day11.Task1(); day11.Task2();
-            
             Day12 day12 = new Day12(); day12.Task1(); day12.Task2();
+
+            Day13 day13 = new Day13(); day13.Task1(); day13.Task2();
 
             Console.ReadLine();
         }
