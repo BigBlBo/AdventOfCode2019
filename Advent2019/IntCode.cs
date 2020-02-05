@@ -30,7 +30,6 @@ namespace Advent2019
         {
             for (long index = pointer; index < inputInt.Length;)
             {
-                //Console.WriteLine(inputInt[index]);
                 int[] instruction = GetInstructions(inputInt[index]);
 
                 int opCode = instruction[4];
@@ -76,8 +75,7 @@ namespace Advent2019
                 {
                     long operand1 = GetOperand(instruction[2], inputInt, firstPos, relativePosition);
                     pointer = index + 2;
-                    index += 2;
-                    //Console.Write(operand1 + ", ");
+
                     return operand1;
                 }
                 else if (opCode == 5)
@@ -214,7 +212,6 @@ namespace Advent2019
 
         private long[] CopyAndExtendToSize(long[] inputInt, long size)
         {
-            //Console.WriteLine("resize");
             long[] newInputInt = new long[size];
             for (int index = 0; index < inputInt.Length; index++)
             {
