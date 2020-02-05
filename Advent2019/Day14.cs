@@ -9,8 +9,21 @@ namespace Advent2019
         public void Task1()
         {
             IDictionary<string, IList<Materials>> materials = ReadAndParse();
+            //int minORE = int.MaxValue;
+            /*
+            foreach(string key in materials.Keys)
+            {
+                int minORE = int.MaxValue; if(key == "STKFG") { continue; }
+                ISet<string> inputMat = new HashSet<string>();
+                //foreach (string ingKey in materials[key][0].inputQuantities.Keys) { inputMat.Add(ingKey); }
+
+                FindMaterials(materials, materials[key][0].inputQuantities, ref minORE, inputMat);
+                Console.WriteLine(key + "  "  + minORE);
+
+            }
+            */
             int minORE = int.MaxValue;
-            FindMaterials(materials, materials["FUEL"][0].inputQuantities, ref minORE);
+            FindMaterials(materials, materials["VXZN"][0].inputQuantities, ref minORE, new HashSet<string>());
 
             long result = 0;
 
@@ -31,7 +44,7 @@ namespace Advent2019
             Console.WriteLine("Day 14 task 2 : " + result);
         }
 
-        private void FindMaterials(IDictionary<string, IList<Materials>> materials, IDictionary<string, int> needMaterials, ref int minORE)
+        private void FindMaterials(IDictionary<string, IList<Materials>> materials, IDictionary<string, int> needMaterials, ref int minORE, ISet<string> inputMat)
         {
             if(needMaterials.Count == 1 && needMaterials.ContainsKey("ORE"))
             {
@@ -40,8 +53,13 @@ namespace Advent2019
                 //Console.WriteLine(needMaterials["ORE"]);
                 return;
             }
+            foreach (string key in needMaterials.Keys)
+            {
+                Console.Write(key + " ");
+            }
+                Console.WriteLine(inputMat.Count);
 
-            if(needMaterials.ContainsKey("ORE") && needMaterials["ORE"] >= minORE)
+            if (needMaterials.ContainsKey("ORE") && needMaterials["ORE"] >= minORE)
             {
                 return;
             }
@@ -49,28 +67,41 @@ namespace Advent2019
             foreach (string key in needMaterials.Keys)
             {
                 if ("ORE" == key) { continue; }
+                if (inputMat.Contains(key)) {
+                    continue; }
 
                 IDictionary<string, int> needMaterialsNew = new Dictionary<string, int>();
+                ISet<string> inputMatNew = new HashSet<string>();
                 foreach (string keyNew in needMaterials.Keys)
                 {
-                    if (keyNew != key) { needMaterialsNew[keyNew] = needMaterials[keyNew]; }
+                    if (keyNew != key) { needMaterialsNew[keyNew] = needMaterials[keyNew];  }
                 }
+                foreach (string keyNew in inputMat)
+                {
+                    inputMatNew.Add(keyNew);
+                }
+                inputMatNew.Add(key);
 
                 int quantity = materials[key][0].outputQuantity;
                 int factor = (int)Math.Ceiling((double)needMaterials[key] / (double)quantity);
+                bool done = false;
                 foreach (Materials material in materials[key])
                 {
                     foreach (string inputMaterial in material.inputQuantities.Keys)
                     {
+                        //if (inputMatNew.Contains(inputMaterial)) {
+                        //    done = true; break; }
                         if (!needMaterialsNew.ContainsKey(inputMaterial)) { needMaterialsNew[inputMaterial] = 0; }
                         needMaterialsNew[inputMaterial] += factor * material.inputQuantities[inputMaterial];
                     }
+                    if (done) { break; }
                 }
+                if (done) { continue; }
                 if (needMaterialsNew.ContainsKey("ORE") && needMaterialsNew["ORE"] >= minORE)
                 {
                     continue;
                 }
-                FindMaterials(materials, needMaterialsNew, ref minORE);
+                FindMaterials(materials, needMaterialsNew, ref minORE, inputMatNew);
             }
         }
 
