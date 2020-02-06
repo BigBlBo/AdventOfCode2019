@@ -9,11 +9,10 @@ namespace Advent2019
         public void Task1()
         {
             IDictionary<Material, IList<Material>> materials = ReadAndParse();
-            IList<Material> wastedMaterials = new List<Material>();
-            IList<Material> needMaterials = new List<Material>();
-            needMaterials.Add(new Material() { Name = "FUEL", Quantity = 1 });
-            IList<Material> endList = FindMaterials(materials, needMaterials, wastedMaterials);
-            long result = CalculateOre(materials, endList, wastedMaterials);
+
+            IList<Material> needMaterials = new List<Material>() { new Material() { Name = "FUEL", Quantity = 1 } };
+            IList<Material> endList = FindMaterials(materials, needMaterials);
+            long result = CalculateOre(endList);
 
             //278404
             Console.WriteLine("Day 14 task 1 : " + result);
@@ -25,11 +24,9 @@ namespace Advent2019
             long result = 0;
             for (long x = 4436900; x < 4500000; x++)
             {
-                IList<Material> wastedMaterials = new List<Material>();
-                IList<Material> needMaterials = new List<Material>();
-                needMaterials.Add(new Material() { Name = "FUEL", Quantity = x });
-                IList<Material> endList = FindMaterials(materials, needMaterials, wastedMaterials);
-                long numOfOre = CalculateOre(materials, endList, wastedMaterials);
+                IList<Material> needMaterials = new List<Material>() { new Material() { Name = "FUEL", Quantity = x } };
+                IList<Material> endList = FindMaterials(materials, needMaterials);
+                long numOfOre = CalculateOre(endList);
 
                 if(numOfOre > 1000000000000)
                 {
@@ -41,62 +38,23 @@ namespace Advent2019
             Console.WriteLine("Day 14 task 1 : " + result);
         }
 
-        private long CalculateOre(IDictionary<Material, IList<Material>> materials, IList<Material> endList, IList<Material> wastedMaterials)
+        private long CalculateOre(IList<Material> endList)
         {
             long result = 0;
-
-            IList<Material> needMaterials = new List<Material>();
             foreach (Material material in endList)
             {
-                bool addToList = true;
-                foreach (Material materialNeed in needMaterials)
-                {
-                    if (materialNeed.Name == material.Name) { materialNeed.Quantity += material.Quantity; addToList = false; }
-                }
-                if (addToList) { needMaterials.Add(material); }
-            }
-
-            foreach (Material material in needMaterials)
-            {
-                foreach (Material materialWasted in wastedMaterials)
-                {
-                    if (materialWasted.Quantity > 0 && materialWasted.Name == material.Name)
-                    {
-                        material.Quantity -= materialWasted.Quantity; materialWasted.Quantity = 0;
-                    }
-                }
-            }
-
-
-            foreach (Material material in needMaterials)
-            {
-                long quantityNeeded = material.Quantity;
-                long quantityProvided = 0;
-                foreach (Material materialBase in materials.Keys)
-                {
-                    if (materialBase.Equals(material))
-                    {
-                        quantityProvided = materialBase.Quantity; break;
-                    }
-
-                }
-                long factor = (long)Math.Ceiling((double)quantityNeeded / (double)quantityProvided);
-
-                result += factor * materials[material][0].Quantity;
+                result += material.Quantity;
             }
 
             return result;
         }
 
-        private IList<Material> FindMaterials(IDictionary<Material, IList<Material>> materials, IList<Material> needMaterials, IList<Material> wastedMaterials)
+        private IList<Material> FindMaterials(IDictionary<Material, IList<Material>> materials, IList<Material> needMaterials)
         {
-            //IList<Material> nn = materials[needMaterials[0]];
-
-            
+            IList<Material> wastedMaterials = new List<Material>();
             for (int index = 0; index < needMaterials.Count; index++)
             {
-                
-                if (materials[needMaterials[index]][0].Name == "ORE")
+                if (!materials.ContainsKey(needMaterials[index]) )
                 {
                     continue;
                 }
