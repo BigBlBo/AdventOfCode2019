@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Advent2019
 {
@@ -35,7 +34,7 @@ namespace Advent2019
             }
 
             //4436981
-            Console.WriteLine("Day 14 task 1 : " + result);
+            Console.WriteLine("Day 14 task 2 : " + result);
         }
 
         private long CalculateOre(IList<Material> endList)
@@ -65,7 +64,7 @@ namespace Advent2019
                 {
                     if (materialWasted.Quantity > 0 && needMaterials[index].Name == materialWasted.Name)
                     {
-                        if (quantityNeeded >= materialWasted.Quantity)
+                        if (quantityNeeded > materialWasted.Quantity)
                         {
                             quantityNeeded -= materialWasted.Quantity;
                             materialWasted.Quantity = 0;
@@ -94,7 +93,9 @@ namespace Advent2019
                 long factor = (long)Math.Ceiling((double)quantityNeeded / (double)quantityProvided);
                 long wasted = (factor * quantityProvided) - quantityNeeded;
                 if (wasted > 0)
+                {
                     wastedMaterials.Add(new Material() { Name = needMaterials[index].Name, Quantity = wasted });
+                }
 
                 foreach (Material material in materials[needMaterials[index]])
                 {

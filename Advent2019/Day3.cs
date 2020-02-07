@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Advent2019
 {
@@ -8,14 +7,9 @@ namespace Advent2019
     {
         public void Task1()
         {
-            IList<string> lines = AdventUtils.ReadFileByLines(@"..\..\..\Files\Day3.txt");
-            //AdventUtils.WriteLines(lines);
-
-            string[] inputFirst = lines[0].Split(',');
-            string[] inputSecond = lines[1].Split(',');
-
-            IDictionary<int, IDictionary<int, int>> wire1 = GetWireWay(inputFirst);
-            IDictionary<int, IDictionary<int, int>> wire2 = GetWireWay(inputSecond);
+            string[][] wires = ReadAndParse();
+            IDictionary<int, IDictionary<int, int>> wire1 = GetWireWay(wires[0]);
+            IDictionary<int, IDictionary<int, int>> wire2 = GetWireWay(wires[1]);
 
             int result = int.MaxValue;
 
@@ -42,14 +36,9 @@ namespace Advent2019
 
         public void Task2()
         {
-            IList<string> lines = AdventUtils.ReadFileByLines(@"..\..\..\Files\Day3.txt");
-            //AdventUtils.WriteLines(lines);
-
-            string[] inputFirst = lines[0].Split(',');
-            string[] inputSecond = lines[1].Split(',');
-
-            IDictionary<int, IDictionary<int, int>> wire1 = GetWireWay(inputFirst);
-            IDictionary<int, IDictionary<int, int>> wire2 = GetWireWay(inputSecond);
+            string[][] wires = ReadAndParse();
+            IDictionary<int, IDictionary<int, int>> wire1 = GetWireWay(wires[0]);
+            IDictionary<int, IDictionary<int, int>> wire2 = GetWireWay(wires[1]);
 
             int result = int.MaxValue;
 
@@ -70,11 +59,11 @@ namespace Advent2019
                 }
             }
 
-            //207
+            //21196
             Console.WriteLine("Day 3 task 2 : " + result);
         }
 
-        public IDictionary<int, IDictionary<int, int>> GetWireWay(string[] input)
+        private IDictionary<int, IDictionary<int, int>> GetWireWay(string[] input)
         {
             IDictionary<int, IDictionary<int, int>> wire = new Dictionary<int, IDictionary<int, int>>();
             int x = 0; int y = 0; int step = 0;
@@ -126,6 +115,18 @@ namespace Advent2019
                 wire[x] = new Dictionary<int, int>();
             }
             wire[x][y] = step;
+        }
+
+        private string[][] ReadAndParse()
+        {
+            IList<string> lines = AdventUtils.ReadFileByLines(@"..\..\..\Files\Day3.txt");
+            //AdventUtils.WriteLines(lines);
+            string[][] output = new string[2][];
+
+            output[0] = lines[0].Split(',');
+            output[1] = lines[1].Split(',');
+
+            return output;
         }
     }
 }

@@ -5,7 +5,16 @@ namespace Advent2019
 {
     class IntCode
     {
-        long[] inputIntInitial; long[] inputInt; long pointer; long relativePosition; long[] readBuffer; long readPointer; long readEndPointer;
+        long[] inputIntInitial { get; set; }
+        long[] inputInt { get; set; }
+        long pointer { get; set; }
+        long relativePosition { get; set; }
+        long[] readBuffer { get; set; }
+        long readPointer { get; set; }
+        long readEndPointer { get; set; }
+
+        public IntCode()
+        { }
 
         public IntCode(long[] inputInt, long[] readBuffer)
         {
@@ -170,6 +179,18 @@ namespace Advent2019
         {
             this.readBuffer = readBuffer;
             readEndPointer = readBuffer.Length - 1; readPointer = -1;
+        }
+
+        public IntCode DeepCopy()
+        {
+            IntCode intCode = new IntCode(this.inputInt, this.readBuffer);
+            intCode.inputIntInitial = this.inputIntInitial;
+            intCode.pointer = this.pointer;
+            intCode.relativePosition = this.relativePosition;
+            intCode.readPointer = this.readPointer;
+            intCode.readEndPointer = this.readEndPointer;
+
+            return intCode;
         }
 
         private long GetOperand(long mode, long[] inputInt, long position, long relativePosition)
