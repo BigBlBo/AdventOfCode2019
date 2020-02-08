@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Advent2019
 {
-    class Day15
+    public class Day15
     {
         public void Task1()
         {
