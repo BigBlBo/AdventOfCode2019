@@ -44,4 +44,29 @@ namespace Advent2019
             return (first * second / GCD(first, second));
         }
     }
+
+    class Point
+    {
+        public long X { get; set; }
+        public long Y { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            Point item = obj as Point;
+
+            if (item.X == X)
+            {
+                if (item.Y == Y)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        public override int GetHashCode()
+        {
+            return X.GetHashCode() + Y.GetHashCode();
+        }
+    }
 }

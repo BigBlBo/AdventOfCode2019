@@ -7,7 +7,7 @@ namespace Advent2019
     {
         static void Main(string[] args)
         {
-            
+            /*
             Day1 day1 = new Day1(); day1.Task1(); day1.Task2();
             Day2 day2 = new Day2(); day2.Task1(); day2.Task2();
             Day3 day3 = new Day3(); day3.Task1(); day3.Task2();
@@ -22,8 +22,9 @@ namespace Advent2019
             Day13 day13 = new Day13(); day13.Task1(); day13.Task2();
             Day14 day14 = new Day14(); day14.Task1(); day14.Task2();
             Day15 day15 = new Day15(); day15.Task1(); day15.Task2();
-            
             Day16 day16 = new Day16(); day16.Task1(); day16.Task2();
+            */
+            Day17 day17 = new Day17(); day17.Task1(); day17.Task2();
             /*
             Day16 day16 = new Day16(); day16.Task1();
             Stopwatch sw = Stopwatch.StartNew();
