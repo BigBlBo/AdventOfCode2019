@@ -22,17 +22,14 @@ namespace Advent2019
             IDictionary<double, IList<Point>> asteroidsToShoot = new Dictionary<double, IList<Point>>();
 
             (long, long, long) bestPosition = GetBestPosition(asteroids);
-
-            for(int index = 10; index >= -10; index--)
+            foreach(Point point in asteroids)
             {
-                for (int index2 = 10; index2 >= -10; index2--)
-                {
-                    double angle2 = Math.Atan2(index, index2) * 180 / Math.PI;
-                    Console.WriteLine(angle2);
-                }
+                point.X = point.X - bestPosition.Item2;
+                point.Y = point.Y - bestPosition.Item3;
             }
 
-            Point shooter = new Point() { X = bestPosition.Item2, Y = bestPosition.Item3 };
+            //Point shooter = new Point() { X = bestPosition.Item2, Y = bestPosition.Item3 };
+            Point shooter = new Point() { X = 0, Y = 0 };
             int counter = 0;
 
             while (true)
@@ -47,7 +44,8 @@ namespace Advent2019
                     if (!asteroidsToShoot.ContainsKey(angle)) { asteroidsToShoot[angle] = new List<Point>(); }
                     asteroidsToShoot[angle].Add(pointCandidate);
 
-                    if(pointCandidate.X == 6 && pointCandidate.Y == 22)
+                    Console.WriteLine(angle + " " + pointCandidate.X + " " + pointCandidate.Y);
+                    if (pointCandidate.X == -16 && pointCandidate.Y == -15)
                     {
                         int ii = 0;
                     }
@@ -65,7 +63,7 @@ namespace Advent2019
                     double minDistance = double.MaxValue; pointOnAngle = null;
                     foreach (Point point in asteroidsToShoot[angle])
                     {
-                        double distance = Math.Pow(point.X - shooter.X, 2) + Math.Pow(point.Y - shooter.Y, 2);
+                        double distance = Math.Abs(point.X - shooter.X) + Math.Abs(point.Y - shooter.Y);
                         if (distance < minDistance) { minDistance = distance;  pointOnAngle = point; }
                         
                     }
@@ -81,7 +79,7 @@ namespace Advent2019
                     double minDistance = double.MaxValue; pointOnAngle = null;
                     foreach (Point point in asteroidsToShoot[angle])
                     {
-                        double distance = Math.Pow(point.X - shooter.X, 2) + Math.Pow(point.Y - shooter.Y, 2);
+                        double distance = Math.Abs(point.X - shooter.X) + Math.Abs(point.Y - shooter.Y);
                         if (distance < minDistance) { minDistance = distance; pointOnAngle = point; }
 
                     }
@@ -113,6 +111,10 @@ namespace Advent2019
 
                     }
                     removedAsteroids.Add(pointOnAngle);
+                }
+                foreach(Point p in removedAsteroids)
+                {
+                    asteroids.Remove(p);
                 }
 
                 Console.WriteLine(removedAsteroids.ElementAt(199).X + " " + removedAsteroids.ElementAt(199).Y);
