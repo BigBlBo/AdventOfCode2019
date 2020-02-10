@@ -23,8 +23,10 @@ namespace Advent2019
             Day14 day14 = new Day14(); day14.Task1(); day14.Task2();
             Day15 day15 = new Day15(); day15.Task1(); day15.Task2();
             Day16 day16 = new Day16(); day16.Task1(); day16.Task2();
-            */
+            
             Day17 day17 = new Day17(); day17.Task1(); day17.Task2();
+            */
+            Day10 day10 = new Day10(); day10.Task1(); day10.Task2();
             /*
             Day16 day16 = new Day16(); day16.Task1();
             Stopwatch sw = Stopwatch.StartNew();
